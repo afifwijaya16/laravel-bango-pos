@@ -44,13 +44,13 @@
     </style>
 </head>
 
-<body class="font-sans antialiased min-h-screen bg-gray-100">
-    <div class="flex h-screen overflow-hidden">
+<body class="font-sans antialiased bg-gray-100">
+    <div class="flex h-screen">
         @include('layouts.sidebar')
-        <main class="flex-1 p-6 overflow-y-auto custom-scrollbar">
+        <div class="flex-1 flex flex-col overflow-hidden">
             @include('layouts.navigation')
             {{ $slot }}
-        </main>
+        </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>

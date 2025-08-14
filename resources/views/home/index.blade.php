@@ -1,111 +1,233 @@
 <x-app-layout>
-    <div class="flex items-center justify-between space-x-6 border-b border-gray-300 pb-2 mb-6">
-        <nav class="flex  space-x-4 text-sm font-semibold">
-            <a href="#" class="pb-2 border-b-2 border-blue-500 text-blue-500">Semua</a>
-            <a href="#" class="pb-2 text-gray-500 hover:text-blue-500">Makanan</a>
-            <a href="#" class="pb-2 text-gray-500 hover:text-blue-500">Minuman</a>
-        </nav>
-        <div class="relative flex-1 max-w-xs ml-auto">
-            <input type="text" placeholder="Cari Item"
-                class="w-full pl-10 pr-4 py-2 border border-orange-300 rounded-lg focus:outline-none focus:border-orange-300 focus:ring-2 focus:ring-orange-500">
-            <i class="fa fa-search h-5 w-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2"></i>
-        </div>
-    </div>
+    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6 main-content">
+        <div class="grid grid-cols-12 gap-6">
+            <div class="col-span-12 lg:col-span-8">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-bold text-gray-800">List Product</h2>
+                    <div class="flex items-center space-x-2">
+                        <div class="relative">
+                            <input type="text" placeholder="Search product"
+                                class="pl-10 pr-4 py-2 border-white bg-white focus:border-white focus:ring-white rounded-lg w-full md:w-64">
+                            <i
+                                class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        </div>
+                        <button class="flex items-center px-4 py-2 border bg-white rounded-lg">
+                            <i class="fas fa-filter mr-2 text-gray-400"></i>
+                            Filter
+                        </button>
+                    </div>
+                </div>
+                <div class="flex space-x-2 border-b mb-6 bg-white p-2 rounded-md">
+                    <button class="px-4 py-2 text-white bg-emerald-600 rounded-full">All Product</button>
+                    <button class="px-4 py-2 text-gray-500">Food</button>
+                    <button class="px-4 py-2 text-gray-500">Side Dishes</button>
+                    <button class="px-4 py-2 text-gray-500">Drink</button>
+                </div>
+                <div id="product-list"
+                    class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 overflow-y-auto h-[600px]">
+                </div>
+            </div>
 
-    <h2 class="text-lg font-bold text-gray-800 mb-4">Pilih Item</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="bg-gray-200 h-40 flex items-center justify-center text-gray-400">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-            </div>
-            <div class="p-4">
-                <h3 class="text-lg font-semibold text-gray-800">Mienta Bakmi</h3>
-                <p class="text-xl font-bold text-gray-900 mt-1">Rp 25.000</p>
-                <p class="text-xs text-gray-500 mt-2">Tersedia <span class="font-semibold">20 item</span></p>
-                <button
-                    class="mt-4 w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                    </svg>
-                    <span>Tambahkan</span>
-                </button>
+            <div class="col-span-12 lg:col-span-4">
+                <div class="bg-white rounded-lg shadow p-6 sticky">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-bold text-gray-800"><i class="fa-solid fa-clipboard-list"></i> Order
+                            #00001</h3>
+                        <button class="text-red-500 font-semibold text-sm"><i class="fas fa-repeat mr-1"></i>Reset
+                            Order</button>
+                    </div>
+                    <div class="flex mb-4 gap-2">
+                        <button class="p-2 text-center bg-emerald-600 text-white rounded-lg font-semibold">
+                            Dine In
+                        </button>
+                        <button
+                            class="p-2 text-center bg-emerald-100 text-emerald-500 border border-emerald-500 rounded-lg font-semibold">
+                            Take Away
+                        </button>
+                    </div>
+                    <div id="order-items" class="space-y-4 mb-4 h-[400px] overflow-y-auto pr-2">
+                    </div>
+                    <div class="border-t pt-4">
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <p class="text-gray-600">Subtotal</p>
+                                <p id="subtotal" class="font-semibold text-gray-800">Rp0</p>
+                            </div>
+                            <div class="flex justify-between">
+                                <p class="text-gray-600">Service Charge 5%</p>
+                                <p id="service-charge" class="font-semibold text-gray-800">Rp0</p>
+                            </div>
+                            <div class="flex justify-between">
+                                <p class="text-gray-600">PBT 10%</p>
+                                <p id="tax" class="font-semibold text-gray-800">Rp0</p>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center mt-4 pt-4 border-t">
+                            <p class="font-bold text-lg text-gray-800">Total Payment</p>
+                            <p id="total-payment" class="font-bold text-lg text-emerald-600">Rp0</p>
+                        </div>
+                        <button
+                            class="w-full bg-emerald-600 text-white py-3 rounded-lg mt-4 font-bold text-base">Continue
+                            Payment <i class="fas fa-arrow-right ml-2"></i></button>
+                    </div>
+                </div>
             </div>
         </div>
+    </main>
+    <script>
+        const products = [{
+                id: 1,
+                name: 'Nasi Goreng Kambing',
+                price: 45000,
+                stock: 20,
+                image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1892&auto=format&fit=crop'
+            },
+            {
+                id: 2,
+                name: 'Nasi Goreng Pete',
+                price: 32000,
+                stock: 10,
+                image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1892&auto=format&fit=crop'
+            },
+            {
+                id: 3,
+                name: 'Mie Ayam Jamur',
+                price: 25000,
+                stock: 20,
+                image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1892&auto=format&fit=crop'
+            },
+            {
+                id: 4,
+                name: 'Kwetiau Goreng Seafood',
+                price: 40000,
+                stock: 20,
+                image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1892&auto=format&fit=crop'
+            },
+            {
+                id: 5,
+                name: 'Es Teh Manis',
+                price: 7000,
+                stock: 100,
+                image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1892&auto=format&fit=crop'
+            },
+            {
+                id: 6,
+                name: 'Es Kopi Susu Gula Aren',
+                price: 15000,
+                stock: 50,
+                image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1892&auto=format&fit=crop'
+            },
+            {
+                id: 7,
+                name: 'Ayam Bakar Kalasan',
+                price: 17000,
+                stock: 50,
+                image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1892&auto=format&fit=crop'
+            },
+            {
+                id: 8,
+                name: 'Nasi Goreng Babat',
+                price: 40000,
+                stock: 20,
+                image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1892&auto=format&fit=crop'
+            },
+        ];
+        let order = [];
+        const formatRupiah = (n) => new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0
+        }).format(n);
 
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="bg-gray-200 h-40 flex items-center justify-center text-gray-400">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-            </div>
-            <div class="p-4">
-                <h3 class="text-lg font-semibold text-gray-800">Nasi Goreng Saikoro</h3>
-                <p class="text-xl font-bold text-gray-900 mt-1">Rp 30.000</p>
-                <p class="text-xs text-gray-500 mt-2">Tersedia <span class="font-semibold">20 item</span></p>
-                <button
-                    class="mt-4 w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                    </svg>
-                    <span>Tambahkan</span>
-                </button>
-            </div>
-        </div>
+        function renderProducts() {
+            const list = document.getElementById('product-list');
+            list.innerHTML = '';
+            products.forEach(p => {
+                list.innerHTML += `
+                    <div class="bg-white rounded-lg shadow p-4 flex flex-col justify-between">
+                        <div>
+                            <img src="${p.image}" alt="${p.name}" class="w-full h-32 object-cover rounded-lg mb-4">
+                            <h3 class="font-bold text-gray-500">${p.name}</h3>
+                            <p class="text-gray-800 font-bold mb-2">${formatRupiah(p.price)}</p>
+                            <div class="flex justify-between">
+                                <p class="text-sm font-semibold">stock</p>    
+                                <p class="text-sm text-green-600 font-semibold bg-emerald-100 p-1 rounded-lg">${p.stock} Product</p>    
+                            </div>
+                        </div>
+                        <button onclick="addToOrder(${p.id})" class="mt-4 w-full border border-emerald-500 text-emerald-600 py-2 rounded-lg font-semibold hover:bg-emerald-200 transition-colors">
+                           <i class="fas fa-plus mr-2 bg-emerald-500 rounded-full p-1 rounded-full text-white"></i> Add
+                        </button>
+                    </div>
+                `;
+            });
+        }
 
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="bg-gray-200 h-40 flex items-center justify-center text-gray-400">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-            </div>
-            <div class="p-4">
-                <h3 class="text-lg font-semibold text-gray-800">Roti Mochi Ayam Kecap</h3>
-                <p class="text-xl font-bold text-gray-900 mt-1">Rp 25.000</p>
-                <p class="text-xs text-gray-500 mt-2">Tersedia <span class="font-semibold">20 item</span></p>
-                <button
-                    class="mt-4 w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                    </svg>
-                    <span>Tambahkan</span>
-                </button>
-            </div>
-        </div>
+        function updateQuantity(id, change) {
+            let item = order.find(i => i.id === id);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) order = order.filter(i => i.id !== id);
+            }
+            renderOrder();
+        }
 
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="bg-gray-200 h-40 flex items-center justify-center text-gray-400">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-            </div>
-            <div class="p-4">
-                <h3 class="text-lg font-semibold text-gray-800">Iced Coffee Malika</h3>
-                <p class="text-xl font-bold text-gray-900 mt-1">Rp 25.000</p>
-                <p class="text-xs text-gray-500 mt-2 text-red-500">Habis <span class="font-semibold">0
-                        item</span></p>
-                <button
-                    class="mt-4 w-full bg-gray-300 text-gray-500 font-bold py-2 px-4 rounded-lg cursor-not-allowed flex items-center justify-center space-x-2"
-                    disabled>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                    </svg>
-                    <span>Tambahkan</span>
-                </button>
-            </div>
-        </div>
-    </div>
+        function addToOrder(id) {
+            let item = order.find(i => i.id === id);
+            if (item) item.quantity++;
+            else order.push({
+                ...products.find(p => p.id === id),
+                quantity: 1
+            });
+            renderOrder();
+        }
+
+        function renderOrder() {
+            const container = document.getElementById('order-items');
+            container.innerHTML = '';
+            let subtotal = 0;
+            order.forEach(item => {
+                subtotal += item.price * item.quantity;
+                container.innerHTML += `
+                    <div class="flex flex-col">
+                        <div class="flex justify-between">
+                            <p class="font-semibold text-gray-800 text-sm">${item.name}</p>
+                            <p class="font-bold text-gray-800 text-sm mb-2">${formatRupiah(item.price * item.quantity)}</p>
+                        </div>
+                       <div class="relative">
+                            <input type="text" placeholder="Catatan..."
+                                class="pr-10 pr-4 py-2 bg-slate-100 border-white bg-white focus:border-white focus:ring-white rounded-lg w-full">
+                            <i class="fas fa-pencil absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        </div>
+                        <div class="flex justify-between mt-2">
+                            <button onclick="updateQuantity(${item.id}, -1)" class="w-8 h-8 text-white p-2 rounded-full text-sm font-bold flex items-center justify-center">
+                                <i class="fa fa-trash text-red-500"></i>
+                            </button>
+                            <div class="flex items-center border rounded-full p-1">
+                                <button onclick="updateQuantity(${item.id}, -1)" class="w-8 h-8 bg-emerald-500 text-white rounded-full text-sm font-bold flex items-center justify-center">-</button>
+                                <span class="mx-2 font-semibold text-sm">${item.quantity}</span>
+                                <button onclick="updateQuantity(${item.id}, 1)" class="w-8 h-8 bg-emerald-500 text-white rounded-full text-sm font-bold flex items-center justify-center">+</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            const service = subtotal * 0.05;
+            const tax = subtotal * 0.10;
+            const total = subtotal + service + tax;
+
+            document.getElementById('subtotal').innerText = formatRupiah(subtotal);
+            document.getElementById('service-charge').innerText = formatRupiah(service);
+            document.getElementById('tax').innerText = formatRupiah(tax);
+            document.getElementById('total-payment').innerText = formatRupiah(total);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            // Initial dummy order for preview
+            addToOrder(1);
+            addToOrder(2);
+            addToOrder(5);
+        });
+    </script>
 </x-app-layout>

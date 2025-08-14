@@ -63,7 +63,8 @@ class AuthenticatedSessionController extends Controller
         $request->validate([
             'outlet_id' => 'required|string'
         ]);
-        $request->session()->put('outlet', $request->outlet_id);
+        $outlet = Outlet::findorfail($request->outlet_id);
+        $request->session()->put('outlet', $outlet->name);
         return redirect()->intended('/dashboard');
     }
 

@@ -32,7 +32,7 @@
         <h2 class="text-center text-xl font-bold mb-3">Welcome, <span class="font-semibold">{{ session('username') }}
         </h2>
         <x-auth-session-status class="mb-4" :status="session('status')" />
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" action="{{ route('store-outlet') }}">
             @csrf
             <div>
                 <x-input-label for="username" :value="__('Outlet')" />
