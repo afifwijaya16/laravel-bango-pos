@@ -17,20 +17,6 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
-        /* @media (max-width:1024px) {
-            #sidebar {
-                @apply -left-72;
-            }
-
-            #sidebar.active {
-                @apply left-0;
-            }
-        }
- */
-        .dropdown:hover .dropdown-menu {
-            display: block;
-        }
-
         ::-webkit-scrollbar {
             height: 8px;
             width: 8px;
@@ -58,7 +44,14 @@
 </head>
 
 <body class="font-sans antialiased min-h-screen bg-gray-100">
-    {{ $slot }}
+    <div class="flex h-screen overflow-hidden">
+        @include('layouts.sidebar')
+        <main class="flex-1 p-6 overflow-y-auto custom-scrollbar">
+            @include('layouts.navigation')
+            {{ $slot }}
+        </main>
+    </div>
+
 </body>
 
 </html>

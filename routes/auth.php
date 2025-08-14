@@ -5,7 +5,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 // use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 // use App\Http\Controllers\Auth\EmailVerificationPromptController;
 // use App\Http\Controllers\Auth\NewPasswordController;
-// use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Auth\PasswordController;
 // use App\Http\Controllers\Auth\PasswordResetLinkController;
 // use App\Http\Controllers\Auth\RegisteredUserController;
 // use App\Http\Controllers\Auth\VerifyEmailController;
@@ -36,8 +36,8 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('outlate', [AuthenticatedSessionController::class, 'showOutlate'])->name('set-outlate');
-    Route::post('create-outlate', [AuthenticatedSessionController::class, 'storeOutlate'])->name('store-outlate');
+    Route::get('outlet-list', [AuthenticatedSessionController::class, 'showOutlet'])->name('set-outlet');
+    Route::post('create-outlet', [AuthenticatedSessionController::class, 'storeOutlet'])->name('store-outlet');
     // Route::get('verify-email', EmailVerificationPromptController::class)
     //     ->name('verification.notice');
 

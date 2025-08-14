@@ -4,16 +4,16 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Outlate;
+use App\Models\Outlet;
 
-class OutlateSeeder extends Seeder
+class OutletSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Outlate::insert([
+        Outlet::insert([
             [
                 'name' => 'Jakarta',
             ],

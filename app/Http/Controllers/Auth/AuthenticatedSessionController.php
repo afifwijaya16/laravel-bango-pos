@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use App\Models\User;
-use App\Models\Outlate;
+use App\Models\Outlet;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -45,25 +45,25 @@ class AuthenticatedSessionController extends Controller
     {
         if (Auth::attempt(['email' => $request->session()->get('email'), 'password' => $request->input('pin')])) {
             $request->session()->regenerate();
-            return redirect()->route('set-outlate');
+            return redirect()->route('set-outlet');
         }
         return back()->withErrors([
             'pin' => 'Wrong Number Pin',
         ])->onlyInput('pin');
     }
 
-    public function showOutlate()
+    public function showOutlet()
     {
-        $outlate = Outlate::get();
-        return view('auth.outlate', compact('outlate'));
+        $outlet = Outlet::get();
+        return view('auth.outlet', compact('outlet'));
     }
 
-    public function storeOutlate(Request $request)
+    public function storeOutlet(Request $request)
     {
         $request->validate([
-            'outlate_id' => 'required|string'
+            'outlet_id' => 'required|string'
         ]);
-        $request->session()->put('outlate', $request->outlate_id);
+        $request->session()->put('outlet', $request->outlet_id);
         return redirect()->intended('/dashboard');
     }
 

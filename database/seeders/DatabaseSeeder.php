@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-            OutlateSeeder::class,
+            OutletSeeder::class,
         ]);
     }
 }

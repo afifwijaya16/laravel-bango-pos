@@ -35,16 +35,16 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
             <div>
-                <x-input-label for="username" :value="__('Outlate')" />
+                <x-input-label for="username" :value="__('Outlet')" />
                 <select required
                     class="select2 p-2 border-gray-300 rounded-md shadow-sm block w-full focus:border-orange-500 focus:ring-orange-500"
-                    name="outlate_id">
+                    name="outlet_id">
                     <option value="" selected disabled>--- Choise ---</option>
-                    @foreach ($outlate as $key)
+                    @foreach ($outlet as $key)
                         <option value="{{ $key->id }}">{{ $key->name }}</option>
                     @endforeach
                 </select>
-                <x-input-error :messages="$errors->get('outlate_id')" class="mt-2" />
+                <x-input-error :messages="$errors->get('outlet_id')" class="mt-2" />
             </div>
             <div class="flex items-center mt-4">
                 <button
