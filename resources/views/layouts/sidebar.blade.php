@@ -4,12 +4,12 @@
             <i class="fas fa-shopping-bag"></i>
         </div>
         <a href="{{ route('dashboard.index') }}"
-            class="w-12 h-12 bg-gray-200 rounded-xl flex items-center justify-center text-gray-500 cursor-pointer">
+            class="w-12 h-12 {{ request()->routeIs('dashboard.*') ? 'bg-orange-500 text-gray-100' : 'bg-gray-200' }} rounded-xl flex items-center justify-center cursor-pointer">
             <i class="fa fa-bars"></i>
         </a>
         <a href="{{ route('outlet.index') }}"
-            class="w-12 h-12 bg-gray-200 rounded-xl flex items-center justify-center text-gray-500 cursor-pointer">
-            <i class="fa fa-home"></i>
+            class="w-12 h-12 {{ request()->routeIs('outlet.*') ? 'bg-orange-500 text-gray-100' : 'bg-gray-200' }} rounded-xl flex items-center justify-center cursor-pointer">
+            <i class="fa-solid fa-caravan"></i>
         </a>
     </div>
     <div
