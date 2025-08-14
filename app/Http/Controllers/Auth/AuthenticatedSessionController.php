@@ -46,7 +46,8 @@ class AuthenticatedSessionController extends Controller
                 'username' => 'No user found'
             ])->withInput();
         }
-        $request->session()->put('email', $request->username);
+        $request->session()->put('username', $request->username);
+        $request->session()->put('email', $request->email);
         return redirect()->route('pin')->with('success', $user->name);;
     }
 
@@ -59,10 +60,8 @@ class AuthenticatedSessionController extends Controller
     {
         if (Auth::attempt(['email' => $request->session()->get('email'), 'password' => $request->input('pin')])) {
             $request->session()->regenerate();
-
             return redirect()->intended('/dashboard');
         }
-
         return back()->withErrors([
             'pin' => 'Wrong Number Pin',
         ])->onlyInput('pin');

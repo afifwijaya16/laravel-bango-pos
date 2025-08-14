@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="text-center mb-6">
         <h1 class="text-3xl font-bold text-gray-800">Food Truck Jajanan Bango</h1>
-        <p class="text-lg text-gray-600 mt-2">Welcome, <span class="font-semibold">{{ session('email') }}</span></p>
+        <p class="text-lg text-gray-600 mt-2">Welcome, <span class="font-semibold">{{ session('username') }}</span></p>
     </div>
 
     <form method="POST" action="{{ route('verify-pin') }}" id="pinForm">
