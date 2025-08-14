@@ -36,6 +36,8 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('outlate', [AuthenticatedSessionController::class, 'showOutlate'])->name('set-outlate');
+    Route::post('create-outlate', [AuthenticatedSessionController::class, 'storeOutlate'])->name('store-outlate');
     // Route::get('verify-email', EmailVerificationPromptController::class)
     //     ->name('verification.notice');
 

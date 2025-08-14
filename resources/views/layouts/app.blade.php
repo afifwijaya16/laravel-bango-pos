@@ -16,23 +16,49 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        /* @media (max-width:1024px) {
+            #sidebar {
+                @apply -left-72;
+            }
+
+            #sidebar.active {
+                @apply left-0;
+            }
+        }
+ */
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        ::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            -webkit-border-radius: 8px;
+            border-radius: 8px;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            -webkit-border-radius: 8px;
+            border-radius: 8px;
+            background: #a0aec0;
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb:window-inactive {
+            background: #a0aec0;
+        }
+    </style>
 </head>
 
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
-        @include('layouts.navigation')
-        @isset($header)
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-        @endisset
-
-        <main>
-            {{ $slot }}
-        </main>
-    </div>
+<body class="font-sans antialiased min-h-screen bg-gray-100">
+    {{ $slot }}
 </body>
 
 </html>

@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use App\Models\User;
+use App\Models\Outlate;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -22,9 +22,7 @@ class AuthenticatedSessionController extends Controller
         $request->validate([
             'username' => 'required|string'
         ]);
-
         $user = User::where('email', $request->username)->first();
-
         if (!$user) {
             return back()->withErrors([
                 'username' => 'No user found'
@@ -47,11 +45,26 @@ class AuthenticatedSessionController extends Controller
     {
         if (Auth::attempt(['email' => $request->session()->get('email'), 'password' => $request->input('pin')])) {
             $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
+            return redirect()->route('set-outlate');
         }
         return back()->withErrors([
             'pin' => 'Wrong Number Pin',
         ])->onlyInput('pin');
+    }
+
+    public function showOutlate()
+    {
+        $outlate = Outlate::get();
+        return view('auth.outlate', compact('outlate'));
+    }
+
+    public function storeOutlate(Request $request)
+    {
+        $request->validate([
+            'outlate_id' => 'required|string'
+        ]);
+        $request->session()->put('outlate', $request->outlate_id);
+        return redirect()->intended('/dashboard');
     }
 
     public function destroy(Request $request): RedirectResponse

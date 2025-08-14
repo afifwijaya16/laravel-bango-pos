@@ -16,10 +16,14 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
-            'username' => 'admin@gmail.com',
+            'name' => 'Admin',
+            'username' => 'admin',
             'email' => 'admin@gmail.com',
             'password' => '1234',
+        ]);
+
+        $this->call([
+            OutlateSeeder::class,
         ]);
     }
 }
