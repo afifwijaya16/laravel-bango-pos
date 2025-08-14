@@ -12,26 +12,10 @@ use App\Models\User;
 
 class AuthenticatedSessionController extends Controller
 {
-    /**
-     * Display the login view.
-     */
     public function create(): View
     {
         return view('auth.login');
     }
-
-    /**
-     * Handle an incoming authentication request.
-     */
-    // public function store(LoginRequest $request): RedirectResponse
-    // {
-    //     $request->authenticate();
-
-    //     $request->session()->regenerate();
-
-    //     return redirect()->intended(route('dashboard', absolute: false));
-    // }
-
 
     public function store(Request $request)
     {
@@ -46,13 +30,16 @@ class AuthenticatedSessionController extends Controller
                 'username' => 'No user found'
             ])->withInput();
         }
-        $request->session()->put('username', $request->username);
-        $request->session()->put('email', $request->email);
+        $request->session()->put('username', $user->username);
+        $request->session()->put('email', $user->email);
         return redirect()->route('pin')->with('success', $user->name);;
     }
 
-    public function showPin(): View
+    public function showPin(Request $request)
     {
+        if (empty($request->session()->get('email'))) {
+            return redirect()->route('login');
+        }
         return view('auth.pin');
     }
 
@@ -67,17 +54,11 @@ class AuthenticatedSessionController extends Controller
         ])->onlyInput('pin');
     }
 
-    /**
-     * Destroy an authenticated session.
-     */
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
-
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
-
         return redirect('/');
     }
 }
