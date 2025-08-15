@@ -72,6 +72,34 @@
             background-color: white;
             color: black;
         }
+
+        .dt-empty {
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 80px);
+        }
+
+        .grid-container {
+            flex: 1;
+            min-height: 0;
+        }
+
+        #order-container {
+            height: calc(100vh - 110px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        #order-items {
+            flex: 1;
+            overflow-y: auto;
+        }
     </style>
 </head>
 

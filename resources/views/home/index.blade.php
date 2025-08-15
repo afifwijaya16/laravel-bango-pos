@@ -1,51 +1,60 @@
 <x-app-layout>
     <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6 main-content">
-        <div class="grid grid-cols-12 gap-6">
-            <div class="col-span-12 lg:col-span-8">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-lg font-bold text-gray-800">List Product</h2>
-                    <div class="flex items-center space-x-2">
-                        <div class="relative">
-                            <input type="text" placeholder="Search product"
-                                class="pl-10 pr-4 py-2 border-white bg-white focus:border-white focus:ring-white rounded-lg w-full md:w-64">
-                            <i
-                                class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+        <div class="grid grid-cols-12 gap-6 grid-container">
+            <div class="col-span-12 lg:col-span-8 relative">
+                <div class="sticky top-0 bg-gray-100 pt-2 pb-4 z-10 overflow-hidden">
+                    <div class="flex justify-between items-center mb-2">
+                        <h2 class="text-lg font-bold text-gray-800">List Product</h2>
+                        <div class="flex items-center space-x-2">
+                            <div class="relative">
+                                <input type="text" placeholder="Search product"
+                                    class="pl-10 pr-4 py-2 border-white bg-white focus:border-white focus:ring-white rounded-lg w-full md:w-64">
+                                <i
+                                    class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            </div>
+                            <button class="flex items-center px-4 py-2 border bg-white rounded-lg">
+                                <i class="fas fa-filter mr-2 text-gray-400"></i>
+                                Filter
+                            </button>
                         </div>
-                        <button class="flex items-center px-4 py-2 border bg-white rounded-lg">
-                            <i class="fas fa-filter mr-2 text-gray-400"></i>
-                            Filter
-                        </button>
+                    </div>
+                    <div class="flex space-x-2 border-b bg-white p-2 rounded-md">
+                        <button class="px-4 py-2 text-white bg-emerald-600 rounded-full">All Product</button>
+                        <button class="px-4 py-2 text-gray-500">Food</button>
+                        <button class="px-4 py-2 text-gray-500">Side Dishes</button>
+                        <button class="px-4 py-2 text-gray-500">Drink</button>
                     </div>
                 </div>
-                <div class="flex space-x-2 border-b mb-6 bg-white p-2 rounded-md">
-                    <button class="px-4 py-2 text-white bg-emerald-600 rounded-full">All Product</button>
-                    <button class="px-4 py-2 text-gray-500">Food</button>
-                    <button class="px-4 py-2 text-gray-500">Side Dishes</button>
-                    <button class="px-4 py-2 text-gray-500">Drink</button>
-                </div>
-                <div id="product-list"
-                    class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 overflow-y-auto h-[600px]">
+
+                <div id="product-list-container" class="h-[calc(100vh-240px)] overflow-y-auto mt-2">
+                    <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 pb-4">
+                    </div>
                 </div>
             </div>
 
             <div class="col-span-12 lg:col-span-4">
-                <div class="bg-white rounded-lg shadow p-6 sticky">
+                <div id="order-container" class="bg-white rounded-lg shadow p-6 sticky">
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-lg font-bold text-gray-800"><i class="fa-solid fa-clipboard-list"></i> Order
+                        <h3 class="text-lg font-bold text-gray-800"><i class="fa-solid fa-clipboard-list"></i>
+                            Order
                             #00001</h3>
                         <button class="text-red-500 font-semibold text-sm"><i class="fas fa-repeat mr-1"></i>Reset
                             Order</button>
                     </div>
                     <div class="flex mb-4 gap-2">
-                        <button class="p-2 text-center bg-emerald-600 text-white rounded-lg font-semibold">
+                        <input type="radio" name="orderType" id="dineIn" class="hidden peer/dinein" checked>
+                        <label for="dineIn"
+                            class="p-2 text-center bg-emerald-100 text-emerald-500 border border-emerald-500 rounded-lg font-semibold cursor-pointer peer-checked/dinein:bg-emerald-600 peer-checked/dinein:text-white peer-checked/dinein:border-none">
                             Dine In
-                        </button>
-                        <button
-                            class="p-2 text-center bg-emerald-100 text-emerald-500 border border-emerald-500 rounded-lg font-semibold">
+                        </label>
+
+                        <input type="radio" name="orderType" id="takeAway" class="hidden peer/takeaway">
+                        <label for="takeAway"
+                            class="p-2 text-center bg-emerald-100 text-emerald-500 border border-emerald-500 rounded-lg font-semibold cursor-pointer peer-checked/takeaway:bg-emerald-600 peer-checked/takeaway:text-white peer-checked/takeaway:border-none">
                             Take Away
-                        </button>
+                        </label>
                     </div>
-                    <div id="order-items" class="space-y-4 mb-4 h-[400px] overflow-y-auto pr-2">
+                    <div id="order-items" class="space-y-4 mb-4 pr-2">
                     </div>
                     <div class="border-t pt-4">
                         <div class="space-y-2 text-sm">
@@ -224,7 +233,6 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             renderProducts();
-            // Initial dummy order for preview
             addToOrder(1);
             addToOrder(2);
             addToOrder(5);
