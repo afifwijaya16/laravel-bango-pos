@@ -21,7 +21,7 @@
              layout: {
                  topEnd: {
                      search: {
-                         placeholder: 'Cari data...'
+                         placeholder: 'Search'
                      },
                  },
              }

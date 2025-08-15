@@ -61,6 +61,14 @@
             border-color: #4b5563;
         }
 
+        .dt-length label {
+            display: none;
+        }
+
+        .dt-search label {
+            display: none;
+        }
+
         .my-table {
             border-collapse: collapse;
             width: 100%;
