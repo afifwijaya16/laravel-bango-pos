@@ -9,6 +9,14 @@
             class="p-3 {{ request()->routeIs('outlet.*') ? 'bg-emerald-100 text-emerald-600' : 'text-gray-500 hover:bg-gray-200' }}   rounded-lg">
             <i class="fa-solid fa-caravan fa-lg"></i>
         </a>
+        <a href="{{ route('category.index') }}"
+            class="p-3 {{ request()->routeIs('category.*') ? 'bg-emerald-100 text-emerald-600' : 'text-gray-500 hover:bg-gray-200' }}   rounded-lg">
+            <i class="fa-solid fa-tag fa-lg"></i>
+        </a>
+        <a href="{{ route('product.index') }}"
+            class="p-3 {{ request()->routeIs('product.*') ? 'bg-emerald-100 text-emerald-600' : 'text-gray-500 hover:bg-gray-200' }}   rounded-lg">
+            <i class="fa-solid fa-gift fa-lg"></i>
+        </a>
     </nav>
     <div class="mt-auto">
         <form method="POST" action="{{ route('logout') }}">
