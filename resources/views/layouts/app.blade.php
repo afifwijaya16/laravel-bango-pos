@@ -73,6 +73,15 @@
             color: black;
         }
 
+        .my-table th {
+            padding: 10px 5px;
+            /* more space for headers */
+        }
+
+        .my-table td {
+            padding: 4px 6px;
+        }
+
         .dt-empty {
             text-align: center;
             margin: 20px 0;

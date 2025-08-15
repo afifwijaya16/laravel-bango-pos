@@ -1,8 +1,8 @@
 <x-app-layout>
-    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6 main-content">
+    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-2 main-content">
         <div class="grid grid-cols-12 gap-6 grid-container">
             <div class="col-span-12 lg:col-span-8 relative">
-                <div class="sticky top-0 bg-gray-100 pt-2 pb-4 z-10 overflow-hidden">
+                <div class="sticky top-0 bg-gray-100 pt-1 pb-4 z-10 overflow-hidden">
                     <div class="flex justify-between items-center mb-2">
                         <h2 class="text-lg font-bold text-gray-800">List Product</h2>
                         <div class="flex items-center space-x-2">

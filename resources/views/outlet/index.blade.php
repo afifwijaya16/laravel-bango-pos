@@ -1,12 +1,12 @@
 <x-app-layout>
-    <div class="bg-white shadow-md m-5">
-        <div class="px-6 py-1 bg-orange-400 flex items-center">
-            <div class="font-bold text-xl text-white">Outlet</div>
+    <div class="bg-white shadow-md m-5 rounded-lg">
+        <div class="px-6 py-1 bg-emerald-600 flex items-center rounded-t-lg">
+            <div class="font-bold text-xl text-white py-1">Outlet</div>
         </div>
         <div class="px-6 py-4">
             <div class="flex justify-end">
                 <button id="button_modalAdd"
-                    class="flex items-center px-4 mb-2 py-2 text-sm font-medium bg-blue-500 text-white hover:bg-blue-600 rounded-md ">
+                    class="flex items-center px-4 mb-2 py-2 text-sm font-medium bg-emerald-600 text-white hover:bg-emerald-700 rounded-md ">
                     <i class="fa fa-plus"></i> <span> Tambah Data</span>
                 </button>
             </div>
@@ -29,7 +29,7 @@
                                 <div class="relative inline-block text-left">
                                     <details class="dropdown">
                                         <summary
-                                            class="btn btn-xs btn-secondary dropdown-toggle flex items-center justify-center w-8 h-8 bg-orange-400 text-white rounded cursor-pointer">
+                                            class="btn btn-xs btn-secondary dropdown-toggle flex items-center justify-center w-8 h-8 bg-emerald-600 hover:bg-emerald-700 text-white rounded cursor-pointer">
                                             <i class="fa fa-list"></i>
                                         </summary>
                                         <div class="dropdown-menu absolute right-0 mt-1 w-40 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-10"

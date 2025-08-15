@@ -1,5 +1,7 @@
 <aside class="bg-white w-20 flex flex-col items-center py-6 shadow-lg z-20">
-    <div class="bg-emerald-600 text-white font-bold text-2xl p-3 rounded-lg mb-8">FJB</div>
+    <div class=" text-white font-bold text-2xl p-3 rounded-lg mb-1">
+        <img src="{{ asset('Logo.png') }}" alt="Logo" class="my-2">
+    </div>
     <nav class="flex flex-col items-center space-y-6">
         <a href="{{ route('dashboard.index') }}"
             class="p-3  {{ request()->routeIs('dashboard.*') ? 'bg-emerald-100 text-emerald-600' : 'text-gray-500 hover:bg-gray-200' }} rounded-lg">
