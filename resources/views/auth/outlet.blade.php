@@ -29,6 +29,7 @@
         }
     </style>
     <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
+        <img src="{{ asset('Logo-FJB.png') }}" alt="Logo" class="my-2">
         <h2 class="text-center text-xl font-bold mb-3">Welcome, <span class="font-semibold">{{ session('username') }}
         </h2>
         <x-auth-session-status class="mb-4" :status="session('status')" />
