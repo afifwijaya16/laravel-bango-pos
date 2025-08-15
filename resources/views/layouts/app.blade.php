@@ -49,22 +49,14 @@
             width: 80px;
         }
 
+        .dt-paging a,
         .dt-search input {
             color: black;
             background-color: #ffff;
             border-color: #4b5563;
         }
 
-        .dt-paging a {
-            color: black;
-            background-color: #ffff;
-            border-color: #4b5563;
-        }
-
-        .dt-length label {
-            display: none;
-        }
-
+        .dt-length label,
         .dt-search label {
             display: none;
         }
@@ -77,7 +69,6 @@
         .my-table th,
         .my-table td {
             border: 1px solid #ddd;
-            padding: 8px;
             background-color: white;
             color: black;
         }
