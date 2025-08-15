@@ -17,7 +17,11 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- DEPRECATED: Remove this line if you have it --}}
+    @viteReactRefresh
+
+    {{-- This is all you need --}}
+    @vite(['resources/css/app.css', 'resources/js/app.jsx'])
     <style>
         ::-webkit-scrollbar {
             height: 8px;
