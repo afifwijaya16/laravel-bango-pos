@@ -38,8 +38,9 @@
                         <h3 class="text-lg font-bold text-gray-800"><i class="fa-solid fa-clipboard-list"></i>
                             Order
                             #00001</h3>
-                        <button class="text-red-500 font-semibold text-sm"><i class="fas fa-repeat mr-1"></i>Reset
-                            Order</button>
+                        <button onclick="resetOrder()" class="text-red-500 font-semibold text-sm">
+                            <i class="fas fa-repeat mr-1"></i>Reset Order
+                        </button>
                     </div>
                     <div class="flex mb-4 gap-2">
                         <input type="radio" name="orderType" id="dineIn" class="hidden peer/dinein" checked>
@@ -55,6 +56,12 @@
                         </label>
                     </div>
                     <div id="order-items" class="space-y-4 mb-4 pr-2">
+                        <div id="empty-order-message" class="flex flex-col items-center text-center py-8">
+                            <img src="{{ asset('no-order.png') }}" alt="no order">
+                            <p class="text-gray-500">Your Order is Empty</p>
+                            <p class="text-sm text-gray-400">You haven’t added any items yet. Please select and add menu
+                                items from the list on the side to start your order</p>
+                        </div>
                     </div>
                     <div class="border-t pt-4">
                         <div class="space-y-2 text-sm">
@@ -75,9 +82,11 @@
                             <p class="font-bold text-lg text-gray-800">Total Payment</p>
                             <p id="total-payment" class="font-bold text-lg text-emerald-600">Rp0</p>
                         </div>
-                        <button
-                            class="w-full bg-emerald-600 text-white py-3 rounded-lg mt-4 font-bold text-base">Continue
-                            Payment <i class="fas fa-arrow-right ml-2"></i></button>
+                        <button id="continue-payment-btn"
+                            class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-lg mt-4 font-bold text-base disabled:bg-gray-300 disabled:cursor-not-allowed"
+                            disabled>
+                            Continue Payment <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -148,6 +157,33 @@
             minimumFractionDigits: 0
         }).format(n);
 
+        function resetOrder() {
+            if (order.length === 0) {
+                Swal.fire('Order is already empty!');
+                return;
+            }
+
+            Swal.fire({
+                title: 'Reset Order?',
+                text: "This will clear all items from the current order",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, reset it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    order = [];
+                    renderOrder();
+                    Swal.fire(
+                        'Reset!',
+                        'Your order has been cleared.',
+                        'success'
+                    );
+                }
+            });
+        }
+
         function renderProducts() {
             const list = document.getElementById('product-list');
             list.innerHTML = '';
@@ -175,51 +211,91 @@
             let item = order.find(i => i.id === id);
             if (item) {
                 item.quantity += change;
-                if (item.quantity <= 0) order = order.filter(i => i.id !== id);
+                if (item.quantity <= 0) {
+                    order = order.filter(i => i.id !== id);
+                }
             }
             renderOrder();
         }
 
+        function updateNotes(id, note) {
+            let item = order.find(i => i.id === id);
+            if (item) {
+                item.notes = note;
+            }
+        }
+
         function addToOrder(id) {
             let item = order.find(i => i.id === id);
-            if (item) item.quantity++;
-            else order.push({
-                ...products.find(p => p.id === id),
-                quantity: 1
-            });
+            if (item) {
+                item.quantity++;
+            } else {
+                const product = products.find(p => p.id === id);
+                if (product) {
+                    order.push({
+                        ...product,
+                        quantity: 1,
+                        notes: ""
+                    });
+                }
+            }
+            renderOrder();
+        }
+
+        function deleteItem(id) {
+            order = order.filter(i => i.id !== id);
             renderOrder();
         }
 
         function renderOrder() {
             const container = document.getElementById('order-items');
+            const emptyMessage = document.getElementById('empty-order-message');
+            const continueBtn = document.getElementById('continue-payment-btn');
+
             container.innerHTML = '';
             let subtotal = 0;
-            order.forEach(item => {
-                subtotal += item.price * item.quantity;
-                container.innerHTML += `
-                    <div class="flex flex-col">
-                        <div class="flex justify-between">
-                            <p class="font-semibold text-gray-800 text-sm">${item.name}</p>
-                            <p class="font-bold text-gray-800 text-sm mb-2">${formatRupiah(item.price * item.quantity)}</p>
-                        </div>
-                       <div class="relative">
-                            <input type="text" placeholder="Catatan..."
-                                class="pr-10 pr-4 py-2 bg-slate-100 border-white bg-white focus:border-white focus:ring-white rounded-lg w-full">
-                            <i class="fas fa-pencil absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                        </div>
-                        <div class="flex justify-between mt-2">
-                            <button onclick="updateQuantity(${item.id}, -1)" class="w-8 h-8 text-white p-2 rounded-full text-sm font-bold flex items-center justify-center">
-                                <i class="fa fa-trash text-red-500"></i>
-                            </button>
-                            <div class="flex items-center border rounded-full p-1">
-                                <button onclick="updateQuantity(${item.id}, -1)" class="w-8 h-8 bg-emerald-500 text-white rounded-full text-sm font-bold flex items-center justify-center">-</button>
-                                <span class="mx-2 font-semibold text-sm">${item.quantity}</span>
-                                <button onclick="updateQuantity(${item.id}, 1)" class="w-8 h-8 bg-emerald-500 text-white rounded-full text-sm font-bold flex items-center justify-center">+</button>
-                            </div>
-                        </div>
+
+            if (order.length === 0) {
+                container.innerHTML = `
+                    <div id="empty-order-message" class="flex flex-col items-center text-center py-8">
+                        <img src="{{ asset('no-order.png') }}" alt="no order">
+                        <p class="text-gray-500">Your Order is Empty</p>
+                        <p class="text-sm text-gray-400">You haven’t added any items yet. Please select and add menu
+                            items from the list on the side to start your order</p>
                     </div>
                 `;
-            });
+                continueBtn.disabled = true;
+            } else {
+                emptyMessage?.remove();
+                order.forEach(item => {
+                    subtotal += item.price * item.quantity;
+                    container.innerHTML += `
+                        <div class="flex flex-col">
+                            <div class="flex justify-between">
+                                <p class="font-semibold text-gray-800 text-sm">${item.name}</p>
+                                <p class="font-bold text-gray-800 text-sm mb-2">${formatRupiah(item.price * item.quantity)}</p>
+                            </div>
+                           <div class="relative">
+                                <input type="text" placeholder="Catatan..." value="${item.notes || ''}"
+                                    class="pr-10 pr-4 py-2 bg-slate-100 border-white bg-white focus:border-white focus:ring-white rounded-lg w-full"
+                                    onchange="updateNotes(${item.id}, this.value)">
+                                <i class="fas fa-pencil absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            </div>
+                            <div class="flex justify-between mt-2">
+                               <button onclick="deleteItem(${item.id})" class="w-8 h-8 text-white p-2 rounded-full text-sm font-bold flex items-center justify-center">
+                                    <i class="fa fa-trash text-red-500 hover:text-red-600"></i>
+                                </button>
+                                <div class="flex items-center border rounded-full p-1">
+                                    <button onclick="updateQuantity(${item.id}, -1)" class="w-8 h-8 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full text-sm font-bold flex items-center justify-center">-</button>
+                                    <span class="mx-2 font-semibold text-sm">${item.quantity}</span>
+                                    <button onclick="updateQuantity(${item.id}, 1)" class="w-8 h-8 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full text-sm font-bold flex items-center justify-center">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                continueBtn.disabled = false;
+            }
 
             const service = subtotal * 0.05;
             const tax = subtotal * 0.10;
@@ -233,9 +309,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             renderProducts();
-            addToOrder(1);
-            addToOrder(2);
-            addToOrder(5);
+            renderOrder();
         });
     </script>
 </x-app-layout>
