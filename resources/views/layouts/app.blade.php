@@ -41,6 +41,38 @@
         ::-webkit-scrollbar-thumb:window-inactive {
             background: #a0aec0;
         }
+
+        .dt-length select {
+            color: black;
+            background-color: #ffff;
+            border-color: #4b5563;
+            width: 80px;
+        }
+
+        .dt-search input {
+            color: black;
+            background-color: #ffff;
+            border-color: #4b5563;
+        }
+
+        .dt-paging a {
+            color: black;
+            background-color: #ffff;
+            border-color: #4b5563;
+        }
+
+        .my-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .my-table th,
+        .my-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            background-color: white;
+            color: black;
+        }
     </style>
 </head>
 
@@ -52,10 +84,12 @@
             {{ $slot }}
         </div>
     </div>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.3.2/js/dataTables.tailwindcss.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     @stack('js')
 </body>
 
