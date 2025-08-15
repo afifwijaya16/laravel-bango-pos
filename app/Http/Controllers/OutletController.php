@@ -102,7 +102,7 @@ class OutletController extends Controller
                 $errors = $validator->errors();
                 return redirect()->back()->withErrors($errors)->with('errorValidation', 'Tidak Berhasil Memperbarui Data');
             } else {
-                $outlet = outlet::findorfail($id);
+                $outlet = Outlet::findorfail($id);
                 $outlet_data = [
                     'name'  => $request->name,
                 ];
