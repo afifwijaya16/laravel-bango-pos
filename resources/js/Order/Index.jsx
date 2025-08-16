@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 export default function OrderPage() {
     const formatRupiah = (number) => {
@@ -10,82 +11,44 @@ export default function OrderPage() {
         }).format(number);
     };
 
-    const initialProducts = [
-        {
-            id: 1,
-            name: "Nasi Goreng Kambing",
-            price: 45000,
-            stock: 20,
-            image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1892&auto=format&fit=crop",
-            category: "Food",
-        },
-        {
-            id: 2,
-            name: "Nasi Goreng Pete",
-            price: 32000,
-            stock: 10,
-            image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1892&auto=format&fit=crop",
-            category: "Food",
-        },
-        {
-            id: 3,
-            name: "Mie Ayam Jamur",
-            price: 25000,
-            stock: 20,
-            image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1892&auto=format&fit=crop",
-            category: "Food",
-        },
-        {
-            id: 4,
-            name: "Kwetiau Goreng Seafood",
-            price: 40000,
-            stock: 20,
-            image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1892&auto=format&fit=crop",
-            category: "Food",
-        },
-        {
-            id: 5,
-            name: "Es Teh Manis",
-            price: 7000,
-            stock: 100,
-            image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1892&auto=format&fit=crop",
-            category: "Drink",
-        },
-        {
-            id: 6,
-            name: "Es Kopi Susu Gula Aren",
-            price: 15000,
-            stock: 50,
-            image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1892&auto=format&fit=crop",
-            category: "Drink",
-        },
-        {
-            id: 7,
-            name: "Ayam Bakar Kalasan",
-            price: 17000,
-            stock: 50,
-            image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1892&auto=format&fit=crop",
-            category: "Side Dishes",
-        },
-        {
-            id: 8,
-            name: "Nasi Goreng Babat",
-            price: 40000,
-            stock: 20,
-            image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1892&auto=format&fit=crop",
-            category: "Food",
-        },
-    ];
-
-    const categories = ["All Product", "Food", "Side Dishes", "Drink"];
-
-    const [products] = useState(initialProducts);
+    const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [order, setOrder] = useState([]);
     const [searchInput, setSearchInput] = useState(""); // isi input
     const [searchTerm, setSearchTerm] = useState(""); // query aktif
     const [activeCategory, setActiveCategory] = useState("All Product");
     const [filteredProducts, setFilteredProducts] = useState(products);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                const categoriesResponse = await axios.get(
+                    "http://127.0.0.1:8000/api/category"
+                );
+                if (!categoriesResponse.data.success)
+                    throw new Error("Failed to load categories");
+                const productsResponse = await axios.get(
+                    "http://127.0.0.1:8000/api/product"
+                );
+                if (!productsResponse.data.success)
+                    throw new Error("Failed to load products");
+                setCategories([
+                    "All Product",
+                    ...categoriesResponse.data.data.map((item) => item.name),
+                ]);
+                setProducts(productsResponse.data.data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     const handleAddToOrder = (product) => {
         setOrder((currentOrder) => {
@@ -175,14 +138,14 @@ export default function OrderPage() {
 
             setFilteredProducts(result);
             setLoading(false);
-        }, 500);
+        }, 300);
 
         return () => clearTimeout(timeout);
     }, [products, activeCategory, searchTerm]);
 
     const { subtotal, serviceCharge, tax, totalPayment } = useMemo(() => {
         const subtotal = order.reduce(
-            (acc, item) => acc + item.price * item.quantity,
+            (acc, item) => acc + item.sale_price * item.quantity,
             0
         );
         const serviceCharge = subtotal * 0.05;
@@ -278,7 +241,11 @@ export default function OrderPage() {
                                     >
                                         <div>
                                             <img
-                                                src={product.image}
+                                                src={
+                                                    product.image
+                                                        ? product.image
+                                                        : "no-image.jpg"
+                                                }
                                                 alt={product.name}
                                                 className="w-full h-32 object-cover rounded-lg mb-4"
                                             />
@@ -286,7 +253,9 @@ export default function OrderPage() {
                                                 {product.name}
                                             </h3>
                                             <p className="text-gray-800 font-bold mb-2">
-                                                {formatRupiah(product.price)}
+                                                {formatRupiah(
+                                                    product.sale_price
+                                                )}
                                             </p>
                                             <div className="flex justify-between">
                                                 <p className="text-sm font-semibold">
@@ -389,7 +358,8 @@ export default function OrderPage() {
                                             </p>
                                             <p className="font-bold text-gray-800 text-sm mb-2">
                                                 {formatRupiah(
-                                                    item.price * item.quantity
+                                                    item.sale_price *
+                                                        item.quantity
                                                 )}
                                             </p>
                                         </div>
