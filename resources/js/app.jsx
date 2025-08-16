@@ -3,6 +3,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import OrderPage from "./Order/Index"; // We will create this component next
 import "../css/app.css";
+import { DataTable } from "simple-datatables";
+
 // Find the root element
 const container = document.getElementById("app");
 
@@ -15,3 +17,10 @@ if (container) {
         </React.StrictMode>
     );
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const dataTable = document.getElementById("myTable");
+    if (dataTable) {
+        new DataTable(dataTable);
+    }
+});

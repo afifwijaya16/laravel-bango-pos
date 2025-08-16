@@ -17,15 +17,6 @@
                  title: '{{ session('errorValidation') }}',
              })
          @endif
-         new DataTable('#example', {
-             layout: {
-                 topEnd: {
-                     search: {
-                         placeholder: 'Search'
-                     },
-                 },
-             }
-         });
 
          document.addEventListener('click', function(event) {
              const dropdowns = document.querySelectorAll('details');

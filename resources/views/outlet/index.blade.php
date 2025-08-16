@@ -10,22 +10,20 @@
                     <i class="fa fa-plus"></i> <span> Tambah Data</span>
                 </button>
             </div>
-            <table id="example" class="my-table">
-                <thead class="bg-white text-gray-700 font-semibold">
+            <table id="myTable" class="w-full border-collapse">
+                <thead>
                     <tr>
-                        <th width="5%" class="border border-gray-300 p-2 bg-white text-black text-center">No</th>
-                        <th class="border border-gray-300 p-2 bg-white text-black">Outlet</th>
-                        <th width="10%" class="border border-gray-300 p-2 bg-white text-black text-center">Action
-                        </th>
+                        <th class="border-b-2 p-4">No</th>
+                        <th class="border-b-2 p-4">Outlet</th>
+                        <th class="border-b-2 p-4">Action</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white text-gray-800">
+                <tbody>
                     @foreach ($outlet as $key)
-                        <tr class="border-t border-gray-200 bg-white">
-                            <td class="border border-gray-300 p-2 bg-white text-black text-center">
-                                {{ $loop->iteration }}</td>
-                            <td class="border border-gray-300 p-2 bg-white text-black">{{ $key->name }}</td>
-                            <td class="border border-gray-300 p-2 bg-white text-black text-center">
+                        <tr>
+                            <td class="border-b p-4">{{ $loop->iteration }}</td>
+                            <td class="border-b p-4">{{ $key->name }}</td>
+                            <td class="border-b p-4 text-center">
                                 <div class="relative inline-block text-left">
                                     <details class="dropdown">
                                         <summary
