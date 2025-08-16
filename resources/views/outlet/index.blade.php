@@ -10,12 +10,12 @@
                     <i class="fa fa-plus"></i> <span> Tambah Data</span>
                 </button>
             </div>
-            <table id="myTable" class="w-full border-collapse">
+            <table id="myTable" class="w-full border-collapse" width="100%">
                 <thead>
                     <tr>
-                        <th class="border-b-2 p-4">No</th>
+                        <th width="5%" class="border-b-2 p-4 text-center">No</th>
                         <th class="border-b-2 p-4">Outlet</th>
-                        <th class="border-b-2 p-4">Action</th>
+                        <th width="10%" class="border-b-2 p-4 text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody>

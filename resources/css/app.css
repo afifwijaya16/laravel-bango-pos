@@ -61,19 +61,32 @@
     @apply mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm;
 }
 
+.datatable-dropdown label {
+    @apply flex text-[0px];
+}
+
+.datatable-dropdown select {
+    width: 80px;
+}
+
 /* Style the container for search and selector */
 .datatable-top {
-    @apply mb-4 flex justify-between items-center;
+    @apply mb-4 flex justify-between items-end;
 }
 
 .datatable-top .datatable-search {
-    @apply flex justify-end items-end;
+    @apply flex ml-auto flex justify-end items-center;
+}
+
+.datatable-bottom .datatable-pagination {
+    @apply flex ml-auto flex justify-end items-center;
 }
 
 /* Style the table headers */
 .datatable-table th {
     @apply font-semibold text-left p-4 bg-gray-50;
 }
+
 .datatable-sorter {
     @apply hover:bg-gray-100 cursor-pointer;
 }
