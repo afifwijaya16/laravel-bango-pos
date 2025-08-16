@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="bg-white shadow-md m-5 rounded-lg">
+    <div class="bg-white shadow-md m-2 rounded-lg">
         <div class="px-6 py-1 bg-emerald-600 flex items-center rounded-t-lg">
             <div class="font-bold text-xl text-white py-1">Outlet</div>
         </div>
@@ -7,7 +7,7 @@
             <div class="flex justify-end">
                 <button id="button_modalAdd"
                     class="flex items-center px-4 mb-2 py-2 text-sm font-medium bg-emerald-600 text-white hover:bg-emerald-700 rounded-md ">
-                    <i class="fa fa-plus"></i> <span> Tambah Data</span>
+                    <i class="fa fa-plus"></i> <span> Add Data</span>
                 </button>
             </div>
             <div class="overflow-x-auto rounded-xl mt-1 shadow-md border border-gray-200 bg-white p-2">
@@ -33,21 +33,20 @@
                                             </summary>
                                             <div class="dropdown-menu absolute right-0 mt-1 w-40 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-10"
                                                 style="min-width: max-content;">
-                                                <a href="javascript:;" title="Perbarui Data"
-                                                    onclick="editFunctionData({{ $key->id }})"
+                                                <a href="javascript:;" onclick="editFunctionData({{ $key->id }})"
                                                     class="dropdown-item w-full flex items-center px-3 py-2 text-gray-700 hover:bg-gray-200 space-x-2">
                                                     <i class="fa fa-edit text-yellow-500"></i>
-                                                    <span>Perbarui</span>
+                                                    <span>Edit</span>
                                                 </a>
                                                 <form id="form-delete-{{ $key->id }}"
                                                     action="{{ route('outlet.destroy', $key->id) }}" method="POST"
                                                     onsubmit="return deleteFunction({{ $key->id }}, event)">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" title="Hapus Data"
+                                                    <button type="submit"
                                                         class="dropdown-item w-full flex items-center px-3 py-2 text-gray-700 hover:bg-gray-200 space-x-2">
                                                         <i class="fa fa-trash text-red-500"></i>
-                                                        <span>Hapus</span>
+                                                        <span>Delete</span>
                                                     </button>
                                                 </form>
                                             </div>

@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="bg-white shadow-md m-5 rounded-lg">
+    <div class="bg-white shadow-md m-2 rounded-lg">
         <div class="px-6 py-1 bg-emerald-600 flex items-center rounded-t-lg">
             <div class="font-bold text-xl text-white py-1">Category</div>
         </div>
@@ -7,25 +7,25 @@
             <div class="flex justify-end">
                 <button id="button_modalAdd"
                     class="flex items-center px-4 mb-2 py-2 text-sm font-medium bg-emerald-600 text-white hover:bg-emerald-700 rounded-md ">
-                    <i class="fa fa-plus"></i> <span> Tambah Data</span>
+                    <i class="fa fa-plus"></i> <span> Add Data</span>
                 </button>
             </div>
-            <table id="example" class="my-table">
-                <thead class="bg-white text-gray-700 font-semibold">
+            <table id="myTable" class="w-full border-collapse" width="100%">
+                <thead>
                     <tr>
-                        <th width="5%" class="border border-gray-300 p-2 bg-white text-black text-center">No</th>
-                        <th class="border border-gray-300 p-2 bg-white text-black">Category</th>
-                        <th width="10%" class="border border-gray-300 p-2 bg-white text-black text-center">Action
+                        <th width="5%" class="p-2">No</th>
+                        <th class="p-2">Category</th>
+                        <th width="10%" class="p-2">Action
                         </th>
                     </tr>
                 </thead>
                 <tbody class="bg-white text-gray-800">
                     @foreach ($category as $key)
-                        <tr class="border-t border-gray-200 bg-white">
-                            <td class="border border-gray-300 p-2 bg-white text-black text-center">
+                        <tr>
+                            <td class="border-b p-4 text-center">
                                 {{ $loop->iteration }}</td>
-                            <td class="border border-gray-300 p-2 bg-white text-black">{{ $key->name }}</td>
-                            <td class="border border-gray-300 p-2 bg-white text-black text-center">
+                            <td class="border-b p-4">{{ $key->name }}</td>
+                            <td class="border-b p-4 text-center">
                                 <div class="relative inline-block text-left">
                                     <details class="dropdown">
                                         <summary
@@ -34,21 +34,20 @@
                                         </summary>
                                         <div class="dropdown-menu absolute right-0 mt-1 w-40 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-10"
                                             style="min-width: max-content;">
-                                            <a href="javascript:;" title="Perbarui Data"
-                                                onclick="editFunctionData({{ $key->id }})"
+                                            <a href="javascript:;" onclick="editFunctionData({{ $key->id }})"
                                                 class="dropdown-item w-full flex items-center px-3 py-2 text-gray-700 hover:bg-gray-200 space-x-2">
                                                 <i class="fa fa-edit text-yellow-500"></i>
-                                                <span>Perbarui</span>
+                                                <span>Edit</span>
                                             </a>
                                             <form id="form-delete-{{ $key->id }}"
                                                 action="{{ route('category.destroy', $key->id) }}" method="POST"
                                                 onsubmit="return deleteFunction({{ $key->id }}, event)">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" title="Hapus Data"
+                                                <button type="submit"
                                                     class="dropdown-item w-full flex items-center px-3 py-2 text-gray-700 hover:bg-gray-200 space-x-2">
                                                     <i class="fa fa-trash text-red-500"></i>
-                                                    <span>Hapus</span>
+                                                    <span>Delete</span>
                                                 </button>
                                             </form>
                                         </div>

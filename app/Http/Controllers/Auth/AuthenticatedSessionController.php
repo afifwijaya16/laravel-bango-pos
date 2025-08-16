@@ -65,6 +65,7 @@ class AuthenticatedSessionController extends Controller
         ]);
         $outlet = Outlet::findorfail($request->outlet_id);
         $request->session()->put('outlet', $outlet->name);
+        $request->session()->put('outlet_id', $outlet->id);
         return redirect()->intended('/dashboard');
     }
 

@@ -2,7 +2,7 @@
     <div class="bg-white rounded-lg shadow-lg max-w-md w-full max-h-[calc(100vh-5rem)] overflow-y-auto">
         <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200">
             <h5 class="text-lg font-semibold flex items-center gap-2">
-                <i class="fa fa-plus"></i> Tambah Category
+                <i class="fa fa-plus"></i> Add Category
             </h5>
             <button type="button" class="text-gray-400 hover:text-gray-600" aria-label="Close"
                 onclick="closeModal('modal-add')">
@@ -15,7 +15,7 @@
             <div class="space-y-4">
                 <div>
                     <label class="block text-sm font-medium mb-1">Category</label>
-                    <input type="text" name="name" required placeholder="Masukan Category"
+                    <input type="text" name="name" required placeholder="Entry Category"
                         class="w-full px-3 py-2 border border-gray-300 rounded-sm text-sm focus:outline-none focus:ring-2 focus:ring-green-500" />
                 </div>
             </div>
@@ -23,12 +23,12 @@
             <div class="flex justify-end gap-2 mt-6 border-t border-gray-200 pt-3">
                 <button type="submit"
                     class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-green-600 rounded hover:bg-green-700">
-                    <i class="fa fa-save"></i> Simpan
+                    <i class="fa fa-save"></i> Save
                 </button>
                 <button type="button"
                     class="px-4 py-2 text-sm font-semibold text-gray-700 bg-gray-200 rounded hover:bg-gray-300"
                     onclick="closeModal('modal-add')">
-                    Tutup
+                    Close
                 </button>
             </div>
         </form>

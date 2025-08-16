@@ -52,17 +52,17 @@ class OutletController extends Controller
             ]);
             if ($validator->fails()) {
                 $errors = $validator->errors();
-                return redirect()->back()->withErrors($errors)->with('errorValidation', 'Tidak Berhasil Menambah Data');
+                return redirect()->back()->withErrors($errors)->with('errorValidation', 'Failed to Add Data');
             } else {
                 Outlet::create([
                     'name'  => $request->name,
                 ]);
                 DB::commit();
-                return redirect()->back()->with('status', 'Berhasil menambah Data');
+                return redirect()->back()->with('status', 'Successfully added data');
             }
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('status', 'Tidak Berhasil menambah Data');
+            return redirect()->back()->with('status', 'Failed to Add Data');
         }
     }
 
@@ -100,7 +100,7 @@ class OutletController extends Controller
 
             if ($validator->fails()) {
                 $errors = $validator->errors();
-                return redirect()->back()->withErrors($errors)->with('errorValidation', 'Tidak Berhasil Memperbarui Data');
+                return redirect()->back()->withErrors($errors)->with('errorValidation', 'Failed to Update Data');
             } else {
                 $outlet = Outlet::findorfail($id);
                 $outlet_data = [
@@ -108,11 +108,11 @@ class OutletController extends Controller
                 ];
                 $outlet->update($outlet_data);
                 DB::commit();
-                return redirect()->back()->with('status', 'Berhasil memperbarui Data');
+                return redirect()->back()->with('status', 'Successfully updated data');
             }
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('status', 'Tidak Berhasil memperbarui Data');
+            return redirect()->back()->with('status', 'Successfully deleted data');
         }
     }
 

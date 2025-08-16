@@ -17,15 +17,6 @@
                  title: '{{ session('errorValidation') }}',
              })
          @endif
-         new DataTable('#example', {
-             layout: {
-                 topEnd: {
-                     search: {
-                         placeholder: 'Search'
-                     },
-                 },
-             }
-         });
 
          document.addEventListener('click', function(event) {
              const dropdowns = document.querySelectorAll('details');
@@ -64,13 +55,13 @@
              const formId = 'form-delete-' + id;
 
              Swal.fire({
-                 title: 'Apakah anda yakin menghapus ini?',
+                 title: 'Are you sure you want to delete this data?',
                  icon: 'warning',
                  showCancelButton: true,
                  confirmButtonColor: '#3085d6',
                  cancelButtonColor: '#d33',
-                 confirmButtonText: 'Ya',
-                 cancelButtonText: 'Tidak'
+                 confirmButtonText: 'Yes',
+                 cancelButtonText: 'No'
              }).then((result) => {
                  if (result.isConfirmed) {
                      document.getElementById(formId).submit();

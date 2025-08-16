@@ -52,17 +52,17 @@ class CategoryController extends Controller
             ]);
             if ($validator->fails()) {
                 $errors = $validator->errors();
-                return redirect()->back()->withErrors($errors)->with('errorValidation', 'Tidak Berhasil Menambah Data');
+                return redirect()->back()->withErrors($errors)->with('errorValidation', 'Failed to Add Data');
             } else {
                 Category::create([
                     'name'  => $request->name,
                 ]);
                 DB::commit();
-                return redirect()->back()->with('status', 'Berhasil menambah Data');
+                return redirect()->back()->with('status', 'Successfully added data');
             }
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('status', 'Tidak Berhasil menambah Data');
+            return redirect()->back()->with('status', 'Failed to Add Data');
         }
     }
 
@@ -100,7 +100,7 @@ class CategoryController extends Controller
 
             if ($validator->fails()) {
                 $errors = $validator->errors();
-                return redirect()->back()->withErrors($errors)->with('errorValidation', 'Tidak Berhasil Memperbarui Data');
+                return redirect()->back()->withErrors($errors)->with('errorValidation', 'Failed to update Data');
             } else {
                 $category = Category::findorfail($id);
                 $category_data = [
@@ -108,11 +108,11 @@ class CategoryController extends Controller
                 ];
                 $category->update($category_data);
                 DB::commit();
-                return redirect()->back()->with('status', 'Berhasil memperbarui Data');
+                return redirect()->back()->with('status', 'Successfully updated data');
             }
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('status', 'Tidak Berhasil memperbarui Data');
+            return redirect()->back()->with('status', 'Failed to update Data');
         }
     }
 
@@ -123,6 +123,6 @@ class CategoryController extends Controller
     {
         $category = Category::findorfail($id);
         $category->delete();
-        return redirect()->back()->with('status', 'Berhasil menghapus data');
+        return redirect()->back()->with('status', 'Successfully deleted data');
     }
 }
