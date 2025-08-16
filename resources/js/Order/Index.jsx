@@ -1,9 +1,7 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Swal from "sweetalert2";
 
-export default function PosSystem() {
-    // --- State Management ---
-
+export default function OrderPage() {
     const formatRupiah = (number) => {
         return new Intl.NumberFormat("id-ID", {
             style: "currency",
@@ -83,24 +81,24 @@ export default function PosSystem() {
 
     const [products] = useState(initialProducts);
     const [order, setOrder] = useState([]);
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchInput, setSearchInput] = useState(""); // isi input
+    const [searchTerm, setSearchTerm] = useState(""); // query aktif
     const [activeCategory, setActiveCategory] = useState("All Product");
+    const [filteredProducts, setFilteredProducts] = useState(products);
+    const [loading, setLoading] = useState(false);
 
-    // --- Event Handlers ---
     const handleAddToOrder = (product) => {
         setOrder((currentOrder) => {
             const existingItem = currentOrder.find(
                 (item) => item.id === product.id
             );
             if (existingItem) {
-                // Increment quantity if item already exists
                 return currentOrder.map((item) =>
                     item.id === product.id
                         ? { ...item, quantity: item.quantity + 1 }
                         : item
                 );
             }
-            // Add new item to the order
             return [...currentOrder, { ...product, quantity: 1, notes: "" }];
         });
     };
@@ -111,10 +109,8 @@ export default function PosSystem() {
                 (item) => item.id === productId
             );
             if (itemToUpdate.quantity + change <= 0) {
-                // Remove item if quantity becomes 0 or less
                 return currentOrder.filter((item) => item.id !== productId);
             }
-            // Update quantity
             return currentOrder.map((item) =>
                 item.id === productId
                     ? { ...item, quantity: item.quantity + change }
@@ -159,17 +155,29 @@ export default function PosSystem() {
         });
     };
 
-    // --- Derived State & Calculations (useMemo for optimization) ---
-    const filteredProducts = useMemo(() => {
-        return products.filter((product) => {
-            const matchesCategory =
-                activeCategory === "All Product" ||
-                product.category === activeCategory;
-            const matchesSearch = product.name
-                .toLowerCase()
-                .includes(searchTerm.toLowerCase());
-            return matchesCategory && matchesSearch;
-        });
+    const handleSearchClick = () => {
+        setSearchTerm(searchInput);
+    };
+
+    useEffect(() => {
+        setLoading(true);
+
+        const timeout = setTimeout(() => {
+            const result = products.filter((product) => {
+                const matchesCategory =
+                    activeCategory === "All Product" ||
+                    product.category === activeCategory;
+                const matchesSearch = product.name
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+
+            setFilteredProducts(result);
+            setLoading(false);
+        }, 500);
+
+        return () => clearTimeout(timeout);
     }, [products, activeCategory, searchTerm]);
 
     const { subtotal, serviceCharge, tax, totalPayment } = useMemo(() => {
@@ -200,14 +208,17 @@ export default function PosSystem() {
                                         type="text"
                                         placeholder="Search product"
                                         className="pl-10 pr-4 py-2 border-white bg-white focus:border-white focus:ring-white rounded-lg w-full md:w-64"
-                                        value={searchTerm}
+                                        value={searchInput}
                                         onChange={(e) =>
-                                            setSearchTerm(e.target.value)
+                                            setSearchInput(e.target.value)
                                         }
                                     />
                                     <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                                 </div>
-                                <button className="flex items-center px-4 py-2 border bg-white rounded-lg">
+                                <button
+                                    onClick={handleSearchClick}
+                                    className="flex items-center px-4 py-2 border bg-white rounded-lg"
+                                >
                                     <i className="fas fa-filter mr-2 text-gray-400"></i>
                                     Filter
                                 </button>
@@ -231,45 +242,74 @@ export default function PosSystem() {
                     </div>
 
                     <div className="h-[calc(100vh-240px)] overflow-y-auto mt-2">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 pb-4">
-                            {filteredProducts.map((product) => (
-                                <div
-                                    key={product.id}
-                                    className="bg-white rounded-lg shadow p-4 flex flex-col justify-between"
-                                >
-                                    <div>
-                                        <img
-                                            src={product.image}
-                                            alt={product.name}
-                                            className="w-full h-32 object-cover rounded-lg mb-4"
-                                        />
-                                        <h3 className="font-bold text-gray-500">
-                                            {product.name}
-                                        </h3>
-                                        <p className="text-gray-800 font-bold mb-2">
-                                            {formatRupiah(product.price)}
-                                        </p>
-                                        <div className="flex justify-between">
-                                            <p className="text-sm font-semibold">
-                                                stock
-                                            </p>
-                                            <p className="text-sm text-green-600 font-semibold bg-emerald-100 p-1 rounded-lg">
-                                                {product.stock} Product
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <button
-                                        onClick={() =>
-                                            handleAddToOrder(product)
-                                        }
-                                        className="mt-4 w-full border border-emerald-500 text-emerald-600 py-2 rounded-lg font-semibold hover:bg-emerald-200 transition-colors"
+                        {loading ? (
+                            // Loading state
+                            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+                                {[...Array(6)].map((_, index) => (
+                                    <div
+                                        key={index}
+                                        className="bg-white rounded-lg shadow p-4 flex flex-col animate-pulse"
                                     >
-                                        <i className="fas fa-plus mr-2 bg-emerald-500 p-1 rounded-full text-white"></i>{" "}
-                                        Add
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
+                                        <div className="w-full h-32 bg-gray-200 rounded-lg mb-4"></div>
+                                        <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                                        <div className="h-4 bg-gray-200 rounded w-1/2 mb-4"></div>
+                                        <div className="flex justify-between">
+                                            <div className="h-4 bg-gray-200 rounded w-12"></div>
+                                            <div className="h-4 bg-gray-200 rounded w-16"></div>
+                                        </div>
+                                        <div className="mt-4 h-10 bg-gray-200 rounded-lg"></div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : filteredProducts.length === 0 ? (
+                            // No product found
+                            <div className="flex justify-center items-center py-10">
+                                <p className="text-gray-500 font-semibold">
+                                    🚫 No products found
+                                </p>
+                            </div>
+                        ) : (
+                            // Product grid
+                            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+                                {filteredProducts.map((product) => (
+                                    <div
+                                        key={product.id}
+                                        className="bg-white rounded-lg shadow p-4 flex flex-col justify-between"
+                                    >
+                                        <div>
+                                            <img
+                                                src={product.image}
+                                                alt={product.name}
+                                                className="w-full h-32 object-cover rounded-lg mb-4"
+                                            />
+                                            <h3 className="font-bold text-gray-500">
+                                                {product.name}
+                                            </h3>
+                                            <p className="text-gray-800 font-bold mb-2">
+                                                {formatRupiah(product.price)}
+                                            </p>
+                                            <div className="flex justify-between">
+                                                <p className="text-sm font-semibold">
+                                                    Stock
+                                                </p>
+                                                <p className="text-sm text-green-600 font-semibold bg-emerald-100 p-1 rounded-lg">
+                                                    {product.stock} Product
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <button
+                                            onClick={() =>
+                                                handleAddToOrder(product)
+                                            }
+                                            className="mt-4 w-full border border-emerald-500 text-emerald-600 py-2 rounded-lg font-semibold hover:bg-emerald-200 transition-colors"
+                                        >
+                                            <i className="fas fa-plus mr-2 bg-emerald-500 p-1 rounded-full text-white"></i>{" "}
+                                            Add
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
 
