@@ -55,7 +55,10 @@
     overflow-y: auto;
 }
 
-/* Style the search input and entries selector */
+.datatable-container {
+    @apply rounded-md border;
+}
+
 .datatable-input,
 .datatable-selector {
     @apply mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm;
@@ -91,17 +94,20 @@
     @apply hover:bg-gray-100 cursor-pointer;
 }
 
-/* Style the pagination buttons */
-.datatable-pagination a {
-    @apply inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50;
+.datatable-pagination a,
+.datatable-pagination button {
+    @apply inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-200 rounded-md;
 }
 
-/* Style the active pagination button */
-.datatable-pagination .datatable-active a {
-    @apply bg-indigo-50 border-indigo-500 text-indigo-600;
+.datatable-pagination .datatable-active a,
+.datatable-pagination .datatable-active a:focus,
+.datatable-pagination .datatable-active a:hover,
+.datatable-pagination .datatable-active button,
+.datatable-pagination .datatable-active button:focus,
+.datatable-pagination .datatable-active button:hover {
+    @apply bg-emerald-50 border-emerald-500 text-emerald-600 rounded-md;
 }
 
-/* Style the pagination container */
 .datatable-bottom {
     @apply mt-4 flex justify-between items-center;
 }
