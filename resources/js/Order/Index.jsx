@@ -242,8 +242,8 @@ export default function OrderPage() {
                                         <div>
                                             <img
                                                 src={
-                                                    product.image
-                                                        ? product.image
+                                                    product.image_path
+                                                        ? `http://127.0.0.1:8000${product.image_path}`
                                                         : "no-image.jpg"
                                                 }
                                                 alt={product.name}
